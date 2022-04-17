@@ -1,0 +1,7 @@
+index:
+    path: /produit
+    controller: App\Controller\ProduitController::index
+
+commande:
+    path: /panier
+    controller: App\Controller\CommandeController::index
