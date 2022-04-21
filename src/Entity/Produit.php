@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,17 @@ class Produit
      * @ORM\Column(type="string", length=255)
      */
     private $category;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity=CommandeInformation::class, mappedBy="produit")
+     */
+    private $commandeInformations;
+
+    public function __construct()
+    {
+        $this->commandeInformations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,4 +102,43 @@ class Produit
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCommandeInformations()
+    {
+        return $this->commandeInformations;
+    }
+
+    /**
+     * @param mixed $commandeInformations
+     */
+    public function setCommandeInformations($commandeInformations): void
+    {
+        $this->commandeInformations = $commandeInformations;
+    }
+
+    public function addCommandeInformation(CommandeInformation $commandeInformation): self
+    {
+        if (!$this->commandeInformations->contains($commandeInformation)) {
+            $this->commandeInformations[] = $commandeInformation;
+            $commandeInformation->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeInformation(CommandeInformation $commandeInformation): self
+    {
+        if ($this->commandeInformations->removeElement($commandeInformation)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeInformation->getProduit() === $this) {
+                $commandeInformation->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

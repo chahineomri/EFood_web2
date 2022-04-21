@@ -26,6 +26,7 @@ class CommandeController extends AbstractController
         }
 
         $totale = 0;
+        //dd($panierWithData);
         foreach ($panierWithData as $item) {
             $totaleItem = $item['product']->getPrice() * $item['quantity'];
             $totale += $totaleItem;

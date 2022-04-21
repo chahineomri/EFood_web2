@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <!-- breadcrumb-section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <p>Fresh and Organic</p>
+                        <h1>Check Out Product</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- check out section -->
+    <div class="checkout-section mt-150 mb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="checkout-accordion-wrap">
+                        <div class="accordion" id="accordionExample">
+                            <form action="submitChkout" method="post">
+                            <div class="card single-accordion">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#collapseOne" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                            Shipping Address
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                     data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="billing-address-form">
+
+                                            <p>{{ form_row(livraisonForm.AdresseLivraison,{'attr':{'placeholder':'Adresse',"class":"form-control"}}) }}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card single-accordion">
+                                <div class="card-header" id="headingThree">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                                data-target="#collapseThree" aria-expanded="false"
+                                                aria-controls="collapseThree">
+                                            Card Details
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                     data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="card-details">
+                                            <p>{{ form_row(livraisonForm.paiement,{'attr':{'placeholder':'Your card details goes here.',"class":"form-control"}}) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 5%">Place Order</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="order-details-wrap">
+                        <table class="order-details">
+                            <thead>
+                            <tr>
+                                <th>Your order Details</th>
+                                <th>Price</th>
+                            </tr>
+                            </thead>
+                            <tbody class="order-details-body">
+                            <tr>
+                                <td>Product</td>
+                                <td>Total</td>
+                            </tr>
+                            {% for item in items %}
+                                <tr>
+                                    <td>{{ item.product.name }}</td>
+                                    <td>$ {{ item.product.price }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                            <tbody class="checkout-details">
+                            <!-- le totale-->
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>$ {{ totale }}</td>
+                            </tr>
+                            <!-- la livraison-->
+                            <tr>
+                                <td>Shipping</td>
+                                <td>$50</td>
+                            </tr>
+                            <!-- le totale après livraison-->
+                            <tr>
+                                <td>Total</td>
+                                <td>$240</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end check out section -->
+{% endblock %}

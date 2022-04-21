@@ -3,5 +3,5 @@ index:
     controller: App\Controller\ProduitController::index
 
 commande:
-    path: /panier
+    path: /checkout
     controller: App\Controller\CommandeController::index

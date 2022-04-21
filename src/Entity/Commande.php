@@ -19,24 +19,23 @@ class Commande
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantity;
+
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\OneToOne(targetEntity=Livraison::class, mappedBy="commande", cascade={"persist", "remove"})
      */
-    private $totale;
+    private $livraison;
+
 
     /**
-     * @ORM\ManyToMany(targetEntity=Produit::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $produits;
+    private $user;
 
     public function __construct()
     {
-        $this->produits = new ArrayCollection();
+        $this->commandeInformations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,51 +43,79 @@ class Commande
         return $this->id;
     }
 
-    public function getQuantity(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity=CommandeInformation::class, mappedBy="commande")
+     */
+    private $commandeInformations;
+
+
+
+    public function getLivraison(): ?Livraison
     {
-        return $this->quantity;
+        return $this->livraison;
     }
 
-    public function setQuantity(int $quantity): self
+    public function setLivraison(Livraison $livraison): self
     {
-        $this->quantity = $quantity;
+        // set the owning side of the relation if necessary
+        if ($livraison->getCommande() !== $this) {
+            $livraison->setCommande($this);
+        }
+
+        $this->livraison = $livraison;
 
         return $this;
     }
 
-    public function getTotale(): ?float
+    public function getUser(): ?User
     {
-        return $this->totale;
+        return $this->user;
     }
 
-    public function setTotale(float $totale): self
+    public function setUser(?User $user): self
     {
-        $this->totale = $totale;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Produit>
+     * @return mixed
      */
-    public function getProduits(): Collection
+    public function getCommandeInformations()
     {
-        return $this->produits;
+        return $this->commandeInformations;
     }
 
-    public function addProduit(Produit $produit): self
+    /**
+     * @param mixed $commandeInformations
+     */
+    public function setCommandeInformations($commandeInformations): void
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits[] = $produit;
+        $this->commandeInformations = $commandeInformations;
+    }
+
+    public function addCommandeInformation(CommandeInformation $commandeInformation): self
+    {
+        if (!$this->commandeInformations->contains($commandeInformation)) {
+            $this->commandeInformations[] = $commandeInformation;
+            $commandeInformation->setCommande($this);
         }
 
         return $this;
     }
 
-    public function removeProduit(Produit $produit): self
+    public function removeCommandeInformation(CommandeInformation $commandeInformation): self
     {
-        $this->produits->removeElement($produit);
+        if ($this->commandeInformations->removeElement($commandeInformation)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeInformation->getCommande() === $this) {
+                $commandeInformation->setCommande(null);
+            }
+        }
 
         return $this;
     }
+
+
 }
