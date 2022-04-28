@@ -13,7 +13,6 @@ class PanierFormType extends AbstractType
     {
         $builder
             ->add('dateCreation')
-            ->add('etat')
             ->add('totale')
         ;
     }

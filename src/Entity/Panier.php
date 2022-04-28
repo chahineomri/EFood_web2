@@ -22,10 +22,7 @@ class Panier
      */
     private $dateCreation;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $etat;
+
 
     /**
      * @ORM\Column(type="float")
@@ -51,18 +48,6 @@ class Panier
     public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
-
-        return $this;
-    }
-
-    public function getEtat(): ?string
-    {
-        return $this->etat;
-    }
-
-    public function setEtat(string $etat): self
-    {
-        $this->etat = $etat;
 
         return $this;
     }

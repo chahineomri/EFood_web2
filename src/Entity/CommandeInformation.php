@@ -26,13 +26,13 @@ class CommandeInformation
 
 
     /**
-     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="commandeInformations")
+     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="commandeInformations",fetch="EAGER")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
      */
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="commandeInformations")
+     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="commandeInformations",fetch="EAGER")
      * @ORM\JoinColumn(name="commande_id", referencedColumnName="id", nullable=false)
      */
     private $commande;

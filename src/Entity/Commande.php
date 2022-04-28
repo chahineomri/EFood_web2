@@ -44,10 +44,52 @@ class Commande
     }
 
     /**
-     * @ORM\OneToMany(targetEntity=CommandeInformation::class, mappedBy="commande")
+     * @ORM\OneToMany(targetEntity=CommandeInformation::class, mappedBy="commande",fetch="EAGER")
      */
     private $commandeInformations;
 
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $etat;
+
+    /**
+     * @return mixed
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param mixed $etat
+     */
+    public function setEtat($etat): void
+    {
+        $this->etat = $etat;
+    }
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $totale;
+
+    /**
+     * @return mixed
+     */
+    public function getTotale()
+    {
+        return $this->totale;
+    }
+
+    /**
+     * @param mixed $totale
+     */
+    public function setTotale($totale): void
+    {
+        $this->totale = $totale;
+    }
 
 
     public function getLivraison(): ?Livraison

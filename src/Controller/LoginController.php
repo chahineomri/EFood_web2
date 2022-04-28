@@ -31,6 +31,7 @@ class LoginController extends AbstractController
             //Hasher le mot de passe
             $hash = $encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($hash);
+            $user->setRole("ROLE_USER");
 
 
             $manager->persist($user);
