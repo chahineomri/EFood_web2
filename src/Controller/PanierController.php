@@ -43,11 +43,14 @@ class PanierController extends AbstractController
             $totale += $totaleItem;
 
         }
+
+        $alltotal = $totale+45;
         $livraison = new Livraison();
         $livraisonForm = $this->createForm(LivraisonFormType::class, $livraison);
         return $this->render('checkout/index.html.twig', [
             'items' => $panierWithData,
             'totale' => $totale,
+            'alltotal'=>$alltotal,
             'livraisonForm' => $livraisonForm->createView()
         ]);
     }
@@ -94,6 +97,7 @@ class PanierController extends AbstractController
             $commande->setLivraison($livraison);
             $commande->setEtat("En_cour");
             $commande->setTotale($totale);
+            $commande->setDateCreation(new \DateTime());
 
             $commandeInfos = array();
             foreach ($panierWithData as $item) {

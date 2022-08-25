@@ -31,9 +31,7 @@
         <link rel="stylesheet" href="{{ asset('/css/responsive.css') }}">
     {% endblock %}
 
-    {% block javascripts %}
-        {# {{ encore_entry_script_tags('app') }} #}
-    {% endblock %}
+
 </head>
 <body>
 
@@ -61,6 +59,9 @@
 
 
                             <li><a href="#">Contact</a></li>
+
+                            <li class="current-list-item"><a href="{{ path('mesCommandes') }}">Mes commandes</a>
+                            </li>
 
                             <li>
                                 <div class="header-icons">
@@ -192,6 +193,8 @@
 <script src="{{ asset('js/sticker.js') }}"></script>
 <!-- main js -->
 <script src="{{ asset('js/main.js') }}"></script>
-
+{% block javascripts %}
+    {# {{ encore_entry_script_tags('app') }} #}
+{% endblock %}
 </body>
 </html>

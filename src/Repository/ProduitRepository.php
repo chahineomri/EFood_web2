@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -21,6 +22,28 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function findSearch(SearchData $data): array{
+        $query = $this
+            ->createQueryBuilder('p');
+
+        if (!empty($data->q)){
+            $query = $query
+                ->andWhere('p.name like :q')
+                ->setParameter('q',"%{$data->q}%");
+        }
+        if(!empty($data->min)){
+            $query = $query
+                ->andWhere('p.price >= :min')
+                ->setParameter('min',$data->min);
+        }
+
+        if(!empty($data->max)){
+            $query = $query
+                ->andWhere('p.price <= :max')
+                ->setParameter('max',$data->max);
+        }
+        return $query->getQuery()->getResult();
+    }
 
 
 

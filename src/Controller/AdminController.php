@@ -29,28 +29,44 @@ class AdminController extends AbstractController
     public function getAllCommands(CommandeRepository $commandeRepository)
     {
         $commandes = $commandeRepository->findAll();
+
         $data = [];
         foreach ($commandes as $commande) {
             $userFullName = $commande->getUser()->getUsername();
             $commandeId = $commande->getId();
             $etatCommande = $commande->getEtat();
             $totale = $commande->getTotale();
+            $info = array(
+                'userFullName' => $userFullName,
+                'etatCommande' => $etatCommande,
+                'commandeId' => $commandeId,
+                'totale' => $totale,
+            );
+            $productInfo = [];
             foreach ($commande->getCommandeInformations() as $commandeInfo) {
                 $productname = $commandeInfo->getProduct()->getName();
                 $productprice = $commandeInfo->getProduct()->getPrice();
                 $productimage = $commandeInfo->getProduct()->getImage();
                 $productQuantity = $commandeInfo->getQuantity();
+
+
+                /*$post_data = new \stdClass();
+                $post_data->productname = $productname;
+                $post_data->productprice = $productprice;
+                $post_data->productname = $productQuantity;
+                $post_data->productimage = $productimage;*/
+
+                $post_data = (object)[
+                    'productname' => $productname,
+                    'productprice' => $productprice,
+                    'productQuantity' => $productQuantity,
+                    'productimage' => $productimage
+                ];
+                array_push($productInfo, $post_data);
+                $allProductsInfo = array('products'=>$productInfo);
             }
-            $post_data = (object)['userFullName' => $userFullName,
-                'etatCommande' => $etatCommande,
-                'commandeId' => $commandeId,
-                'totale' => $totale,
-                'productname' => $productname,
-                'productprice' => $productprice,
-                'productQuantity' => $productQuantity,
-                'productimage' => $productimage
-            ];
-            array_push($data, $post_data);
+            $alldata = $info + $allProductsInfo;
+            array_push($data, $alldata);
         }
         $response = new Response(json_encode(array('data' => $data)));
         $response->headers->set('Content-Type', 'application/json');
@@ -65,7 +81,6 @@ class AdminController extends AbstractController
                                     CommandeRepository $commandeRepository,
                                     ManagerRegistry    $managerRegistry)
     {
-
 
 
         $manager = $managerRegistry->getManager();

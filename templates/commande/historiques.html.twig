@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <h1>Mes commandes</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- product section -->
+    <div class="product-section mt-150 mb-150">
+        <div class="container">
+
+            <!-- appel du template single commande-->
+            {% include 'commande/_singleCommande.html.twig' with {commandes: commandes} only %}
+        </div>
+    </div>
+    <!-- end product section -->
+{% endblock %}

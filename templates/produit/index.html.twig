@@ -3,28 +3,18 @@
 
 
 {% block body %}
-
-    <!-- hero area -->
-    <div class="hero-area hero-bg">
+    <div class="breadcrumb-section breadcrumb-bg">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9 offset-lg-2 text-center">
-                    <div class="hero-text">
-                        <div class="hero-text-tablecell">
-                            <p class="subtitle">Fresh & Organic</p>
-                            <h1>Delicious Seasonal Fruits</h1>
-                            <div class="hero-btns">
-                                <a href="" class="boxed-btn">Fruit Collection</a>
-                                <a href="" class="bordered-btn">Contact Us</a>
-                            </div>
-                        </div>
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <p>Fresh and Organic</p>
+                        <h1>Shop</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end hero area -->
-
     <!-- product section -->
     <div class="product-section mt-150 mb-150">
         <div class="container">
@@ -38,21 +28,26 @@
             </div>
 
             <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    {% include 'produit/_filter.html.twig' with {form: form} only %}
+                </div>
                 {% for produit in produits %}
-                    <div class="col-lg-4 col-md-6 text-center">
+                    <div class="col-lg-3 col-md-6 text-center">
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="single-product.html"><img src="{{ asset('img/products/'~produit.image~'') }}" alt=""></a>
                             </div>
                             <h3>{{ produit.name }}</h3>
                             <p class="product-price"><span>Per Kg</span> {{ produit.price }} </p>
-                            <a href="{{ path('panier_add',{'id':produit.id}) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="{{ path('panier_add',{'id':produit.id}) }}" class="cart-btn"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                         </div>
                     </div>
                 {% endfor %}
-
-
+                <div class="pagination">
+                    {{ knp_pagination_render(produits) }}
+                </div>
             </div>
+
         </div>
     </div>
     <!-- end product section -->

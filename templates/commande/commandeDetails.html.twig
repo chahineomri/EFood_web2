@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <p>Read the Details</p>
+                        <h1>Single Article</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-section mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for commande in commandes %}
+                        {% for productInfo in commande.commandeInformations %}
+                            <div class="carousel-item active">
+                                <img class="d-block w-100"
+                                     src="{{ asset('img/products/'~productInfo.product.image~'') }}" alt="First slide">
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

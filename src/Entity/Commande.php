@@ -22,7 +22,8 @@ class Commande
 
 
     /**
-     * @ORM\OneToOne(targetEntity=Livraison::class, mappedBy="commande", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Livraison::class,
+     *     mappedBy="commande", cascade={"persist", "remove"})
      */
     private $livraison;
 
@@ -42,6 +43,11 @@ class Commande
     {
         return $this->id;
     }
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $dateCreation;
 
     /**
      * @ORM\OneToMany(targetEntity=CommandeInformation::class, mappedBy="commande",fetch="EAGER")
@@ -158,6 +164,24 @@ class Commande
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * @param mixed $dateCreation
+     */
+    public function setDateCreation($dateCreation): void
+    {
+        $this->dateCreation = $dateCreation;
+    }
+
+
 
 
 }
